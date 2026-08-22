@@ -8,8 +8,8 @@ import { isFavorite, toggleFavorite } from "@/components/FavoritesBar";
 function StarIcon({ filled }) {
   return (
     <svg
-      width="14"
-      height="14"
+      width="15"
+      height="15"
       viewBox="0 0 24 24"
       fill={filled ? "#f59e0b" : "none"}
       stroke={filled ? "#f59e0b" : "currentColor"}
@@ -22,6 +22,22 @@ function StarIcon({ filled }) {
     </svg>
   );
 }
+
+const CATEGORY_STYLES = {
+  "pdf-tools": "bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-500/30",
+  "word-tools": "bg-blue-50 dark:bg-blue-500/15 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-500/30",
+  "image-tools": "bg-orange-50 dark:bg-orange-500/15 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-500/30",
+  "text-analysis": "bg-purple-50 dark:bg-purple-500/15 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-500/30",
+  editing: "bg-rose-50 dark:bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-500/30",
+  web: "bg-sky-50 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-500/30",
+  cryptography: "bg-amber-50 dark:bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/30",
+  "unit-conversion": "bg-teal-50 dark:bg-teal-500/15 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-500/30",
+  "random-generator": "bg-pink-50 dark:bg-pink-500/15 text-pink-700 dark:text-pink-300 border-pink-200 dark:border-pink-500/30",
+  programming: "bg-emerald-50 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/30",
+  converter: "bg-cyan-50 dark:bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border-cyan-200 dark:border-cyan-500/30",
+  css: "bg-violet-50 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-500/30",
+  default: "bg-cyan-50 dark:bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border-cyan-200 dark:border-cyan-500/30",
+};
 
 export default function ToolCard({ tool }) {
   const [starred, setStarred] = useState(false);
@@ -39,20 +55,22 @@ export default function ToolCard({ tool }) {
     toggleFavorite(tool.slug);
   };
 
+  const badgeStyle = CATEGORY_STYLES[tool.category] || CATEGORY_STYLES.default;
+
   return (
-    <div className="ct-card group flex flex-col justify-between p-3 sm:p-4 relative">
+    <div className="group relative bg-white dark:bg-[#131d2b] border border-slate-200 dark:border-[#223247] hover:border-blue-500 dark:hover:border-cyan-500/50 rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-2xl hover:shadow-slate-200/80 dark:hover:shadow-cyan-950/40 hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between h-full">
       <Link href={`/tools/${tool.slug}`} className="block flex-1">
-        {/* Vector Picture Illustration Banner */}
-        <div className="w-full aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden mb-2.5 border border-slate-100 bg-slate-50 group-hover:scale-[1.02] transition-transform duration-200 relative">
+        {/* Differentiation Factor: Picture / Illustration Banner space */}
+        <div className="w-full aspect-[16/10] rounded-xl overflow-hidden mb-4 border border-slate-100 dark:border-[#202f43] bg-slate-50 dark:bg-[#0c131d] group-hover:scale-[1.02] transition-transform duration-200 relative shadow-inner">
           <ToolIllustration slug={tool.slug} name={tool.name} category={tool.category} />
 
-          {/* Clean SVG Star Favorite Button */}
+          {/* Star Favorite Button */}
           <button
             onClick={handleStar}
-            className={`absolute top-2 right-2 z-10 w-7 h-7 rounded-full flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-2xs ${
+            className={`absolute top-2.5 right-2.5 z-10 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-sm ${
               starred
-                ? "bg-amber-100/90 text-amber-500 border border-amber-300"
-                : "bg-white/80 text-slate-400 hover:text-amber-500 hover:bg-white border border-slate-200/60"
+                ? "bg-amber-100 dark:bg-amber-400/20 text-amber-500 dark:text-amber-400 border border-amber-300 dark:border-amber-400/40"
+                : "bg-white/80 dark:bg-black/50 text-slate-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-white dark:hover:bg-black/70 border border-slate-200 dark:border-white/10"
             }`}
             title={starred ? "Remove from Favorites" : "Add to Favorites"}
           >
@@ -60,29 +78,36 @@ export default function ToolCard({ tool }) {
           </button>
         </div>
 
-        {/* Tool Title */}
-        <h3 className="font-heading font-bold text-xs sm:text-sm text-slate-900 group-hover:text-blue-600 transition-colors leading-tight mb-1 line-clamp-1">
+        {/* Category Pill */}
+        <div className="mb-2.5">
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-semibold border ${badgeStyle} capitalize`}>
+            {tool.category?.replace(/-/g, " ")}
+          </span>
+        </div>
+
+        {/* Tool Name Title */}
+        <h3 className="font-heading font-bold text-base sm:text-lg text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors leading-snug mb-2 line-clamp-1">
           {tool.name}
         </h3>
 
         {/* Tool Description */}
-        <p className="text-[11px] sm:text-xs text-slate-500 leading-normal line-clamp-2 mb-2">
+        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mb-4">
           {tool.description}
-        </p>
-
-        {/* Metadata string */}
-        <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium mb-2 truncate">
-          FreeTooly | October 2026
         </p>
       </Link>
 
-      {/* Category Tag Badge Pill */}
-      <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-1">
-        <span className="ct-tag text-[10px] sm:text-xs py-0.5 px-2">
-          {tool.category}
+      {/* Card Action Footer */}
+      <div className="pt-3 border-t border-slate-100 dark:border-[#1f2e41] flex items-center justify-between">
+        <span className="text-[11px] font-medium text-slate-400 dark:text-slate-400 flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-cyan-400" />
+          100% Free
         </span>
-        <Link href={`/tools/${tool.slug}`} className="text-[10px] sm:text-xs font-semibold text-blue-600 group-hover:underline flex-shrink-0">
-          Open →
+        <Link
+          href={`/tools/${tool.slug}`}
+          className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-blue-600 dark:text-cyan-400 group-hover:text-blue-700 dark:group-hover:text-cyan-300 group-hover:translate-x-1 transition-all"
+        >
+          <span>Use Tool</span>
+          <span>→</span>
         </Link>
       </div>
     </div>

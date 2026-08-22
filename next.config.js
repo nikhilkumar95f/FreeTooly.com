@@ -6,6 +6,14 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.cache = {
+        type: "memory",
+      };
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;

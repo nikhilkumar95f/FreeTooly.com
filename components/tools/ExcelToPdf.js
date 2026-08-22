@@ -4,21 +4,16 @@ import { useState } from "react";
 import FileDropzone from "@/components/FileDropzone";
 
 async function getXLSX() {
-  try {
-    const xName = "xlsx";
-    return await import(xName);
-  } catch {
-    if (typeof window !== "undefined" && window.XLSX) {
-      return window.XLSX;
-    }
-    return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = "https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js";
-      script.onload = () => resolve(window.XLSX);
-      script.onerror = () => reject(new Error("Failed to load Excel parsing engine."));
-      document.head.appendChild(script);
-    });
+  if (typeof window !== "undefined" && window.XLSX) {
+    return window.XLSX;
   }
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js";
+    script.onload = () => resolve(window.XLSX);
+    script.onerror = () => reject(new Error("Failed to load Excel parsing engine."));
+    document.head.appendChild(script);
+  });
 }
 
 export default function ExcelToPdf() {
@@ -89,9 +84,9 @@ export default function ExcelToPdf() {
 
       {/* Live In-Browser Spreadsheet Table Preview */}
       {tableHtml && (
-        <div className="space-y-3 pt-4 border-t border-slate-200">
+        <div className="space-y-3 pt-4 border-t border-slate-200 dark:border-[#223247]">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+            <span className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
               <span>👁</span> Live Spreadsheet Table Preview (No Download Needed)
             </span>
             <button onClick={handlePrintDownload} className="ct-btn-secondary py-1 px-3 text-xs">
@@ -100,7 +95,7 @@ export default function ExcelToPdf() {
           </div>
 
           <div
-            className="w-full max-h-[450px] overflow-auto rounded-2xl p-4 border-2 border-blue-200 bg-white shadow-inner text-slate-800 text-xs shadow-2xs"
+            className="w-full max-h-[450px] overflow-auto rounded-2xl p-4 border-2 border-blue-200 dark:border-cyan-500/40 bg-white dark:bg-[#0c131d] shadow-inner text-slate-800 dark:text-slate-200 text-xs"
             dangerouslySetInnerHTML={{ __html: tableHtml }}
           />
         </div>

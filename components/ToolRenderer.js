@@ -3,7 +3,7 @@
 import { getToolBySlug } from "@/lib/tools-registry";
 import GenericToolRenderer from "@/components/GenericToolRenderer";
 
-// Direct component imports (eliminates dynamic import chunk trace 500 errors)
+// Direct component imports
 import WordCounter from "@/components/tools/WordCounter";
 import CaseConverter from "@/components/tools/CaseConverter";
 import JsonFormatter from "@/components/tools/JsonFormatter";
@@ -38,6 +38,23 @@ import PptToPdf from "@/components/tools/PptToPdf";
 
 import MergeWord from "@/components/tools/MergeWord";
 import CropJpg from "@/components/tools/CropJpg";
+
+// Newly added high-demand custom tools
+import Sha512Hash from "@/components/tools/Sha512Hash";
+import Sha384Hash from "@/components/tools/Sha384Hash";
+import FindReplace from "@/components/tools/FindReplace";
+import RemoveEmptyLines from "@/components/tools/RemoveEmptyLines";
+import StringToBinary from "@/components/tools/StringToBinary";
+import BinaryToString from "@/components/tools/BinaryToString";
+import HexToString from "@/components/tools/HexToString";
+import AsciiToText from "@/components/tools/AsciiToText";
+import JsonToCsv from "@/components/tools/JsonToCsv";
+import NumbersToWords from "@/components/tools/NumbersToWords";
+import HexToRgb from "@/components/tools/HexToRgb";
+import SnakeCamelConverter from "@/components/tools/SnakeCamelConverter";
+import ReplaceNewlines from "@/components/tools/ReplaceNewlines";
+import RandomGenerators from "@/components/tools/RandomGenerators";
+import VideoTools from "@/components/tools/VideoTools";
 
 const componentMap = {
   "word-counter": WordCounter,
@@ -74,6 +91,40 @@ const componentMap = {
 
   "merge-word": MergeWord,
   "crop-jpg": CropJpg,
+
+  // New Mappings
+  "sha512-hash": Sha512Hash,
+  "sha384-hash": Sha384Hash,
+  "find-replace": FindReplace,
+  "remove-empty-lines": RemoveEmptyLines,
+  "remove-empty-lines-general": RemoveEmptyLines,
+  "text-binary-converter": StringToBinary,
+  "binary-to-string": BinaryToString,
+  "hex-to-string": HexToString,
+  "ascii-to-text": AsciiToText,
+  "json-to-csv": JsonToCsv,
+  "numbers-to-words": NumbersToWords,
+  "hex-to-rgb": HexToRgb,
+  "snake-case-to-camel": SnakeCamelConverter,
+  "replace-newlines-commas": () => <ReplaceNewlines defaultSeparator="commas" />,
+  "replace-newlines-semicolons": () => <ReplaceNewlines defaultSeparator="semicolons" />,
+
+  // Video Tools
+  "video-tools": VideoTools,
+  "mute-video": VideoTools,
+  "video-to-gif": VideoTools,
+
+  // Random generators
+  "random-emoji": () => <RandomGenerators type="random-emoji" title="Random Emoji Generator" />,
+  "random-animal": () => <RandomGenerators type="random-animal" title="Random Animal Generator" />,
+  "random-food": () => <RandomGenerators type="random-food" title="Random Food Generator" />,
+  "random-hobby": () => <RandomGenerators type="random-hobby" title="Random Hobby Generator" />,
+  "random-movie": () => <RandomGenerators type="random-movie" title="Random Movie Generator" />,
+  "random-fruits": () => <RandomGenerators type="random-fruits" title="Random Fruit Generator" />,
+  "random-marvel-character": () => <RandomGenerators type="random-marvel-character" title="Random Marvel Character Generator" />,
+  "random-disney-character": () => <RandomGenerators type="random-disney-character" title="Random Disney Character Generator" />,
+  "random-female-name": () => <RandomGenerators type="random-female-name" title="Random Female Name Generator" />,
+  "random-male-name": () => <RandomGenerators type="random-male-name" title="Random Male Name Generator" />,
 };
 
 export default function ToolRenderer({ slug }) {

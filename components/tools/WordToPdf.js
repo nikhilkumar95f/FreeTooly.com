@@ -1,25 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import FileDropzone from "@/components/FileDropzone";
-import { downloadFile } from "@/lib/file-utils";
 
 async function getMammoth() {
-  try {
-    const mName = "mammoth";
-    return await import(mName);
-  } catch {
-    if (typeof window !== "undefined" && window.mammoth) {
-      return window.mammoth;
-    }
-    return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = "https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js";
-      script.onload = () => resolve(window.mammoth);
-      script.onerror = () => reject(new Error("Failed to load Word document processing engine."));
-      document.head.appendChild(script);
-    });
+  if (typeof window !== "undefined" && window.mammoth) {
+    return window.mammoth;
   }
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js";
+    script.onload = () => resolve(window.mammoth);
+    script.onerror = () => reject(new Error("Failed to load Word document processing engine."));
+    document.head.appendChild(script);
+  });
 }
 
 export default function WordToPdf() {
@@ -87,9 +81,9 @@ export default function WordToPdf() {
 
       {/* Live In-Browser Formatted Document Preview */}
       {extractedHtml && (
-        <div className="space-y-3 pt-4 border-t border-slate-200">
+        <div className="space-y-3 pt-4 border-t border-slate-200 dark:border-[#223247]">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+            <span className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
               <span>👁</span> Live Word Document Preview (No Download Needed)
             </span>
             <button onClick={handlePrintDownload} className="ct-btn-secondary py-1 px-3 text-xs">
@@ -98,7 +92,7 @@ export default function WordToPdf() {
           </div>
 
           <div
-            className="w-full max-h-[450px] overflow-y-auto rounded-2xl p-6 border-2 border-blue-200 bg-white shadow-inner text-slate-800 text-sm leading-relaxed prose max-w-none"
+            className="w-full max-h-[450px] overflow-y-auto rounded-2xl p-6 border-2 border-blue-200 dark:border-cyan-500/40 bg-white dark:bg-[#0c131d] shadow-inner text-slate-800 dark:text-slate-200 text-sm leading-relaxed prose max-w-none"
             dangerouslySetInnerHTML={{ __html: extractedHtml }}
           />
         </div>

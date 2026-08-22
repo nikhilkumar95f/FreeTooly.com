@@ -30,7 +30,7 @@ export default function ToolGuideAndFaq({ tool }) {
     },
     {
       q: `Are my files and data safe when using ${tool?.name || "this tool"}?`,
-      a: `Absoluely. All processing takes place locally inside your web browser using client-side JavaScript. Your files and personal data are never uploaded to remote servers.`,
+      a: `Absolutely. All processing takes place locally inside your web browser using client-side JavaScript. Your files and personal data are never uploaded to remote servers.`,
     },
     {
       q: `Can I use ${tool?.name || "this tool"} on mobile devices?`,
@@ -39,22 +39,25 @@ export default function ToolGuideAndFaq({ tool }) {
   ];
 
   return (
-    <div className="space-y-10 mt-12 pt-8 border-t border-slate-200">
+    <div className="space-y-10 mt-12 pt-8 border-t border-slate-200 dark:border-[#1f2d3d]">
       {/* 3-Step How-To Guide */}
       <div className="space-y-6">
         <div className="text-center max-w-xl mx-auto space-y-1">
-          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Simple 3-Step Guide</span>
-          <h2 className="font-heading text-xl sm:text-2xl font-extrabold text-slate-900">
+          <span className="text-xs font-bold text-blue-600 dark:text-cyan-400 uppercase tracking-wider">Simple 3-Step Guide</span>
+          <h2 className="font-heading text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
             How to use {tool?.name || "this tool"}
           </h2>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {steps.map((step) => (
-            <div key={step.num} className="bg-white border border-slate-200 rounded-2xl p-5 space-y-2 relative shadow-2xs">
-              <span className="font-heading font-black text-2xl text-blue-600 opacity-30">{step.num}</span>
-              <h3 className="font-heading font-bold text-sm text-slate-900">{step.title}</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">{step.desc}</p>
+            <div
+              key={step.num}
+              className="bg-white dark:bg-[#131d2b] border border-slate-200 dark:border-[#223247] rounded-2xl p-5 space-y-2 relative shadow-xs"
+            >
+              <span className="font-heading font-black text-2xl text-blue-600 dark:text-cyan-400 opacity-40">{step.num}</span>
+              <h3 className="font-heading font-bold text-sm text-slate-900 dark:text-white">{step.title}</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{step.desc}</p>
             </div>
           ))}
         </div>
@@ -63,24 +66,24 @@ export default function ToolGuideAndFaq({ tool }) {
       {/* Accordion FAQ Section */}
       <div className="space-y-6">
         <div className="text-center max-w-xl mx-auto space-y-1">
-          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Frequently Asked Questions</span>
-          <h2 className="font-heading text-xl sm:text-2xl font-extrabold text-slate-900">
+          <span className="text-xs font-bold text-blue-600 dark:text-cyan-400 uppercase tracking-wider">Frequently Asked Questions</span>
+          <h2 className="font-heading text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
             Questions about {tool?.name || "this tool"}
           </h2>
         </div>
 
         <div className="max-w-2xl mx-auto space-y-3">
           {faqs.map((faq, i) => (
-            <div key={i} className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs">
+            <div key={i} className="bg-white dark:bg-[#131d2b] border border-slate-200 dark:border-[#223247] rounded-xl overflow-hidden shadow-xs">
               <button
                 onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
-                className="w-full text-left p-4 font-bold text-xs sm:text-sm text-slate-900 flex items-center justify-between gap-3 hover:bg-slate-50 transition-colors"
+                className="w-full text-left p-4 font-bold text-xs sm:text-sm text-slate-900 dark:text-white flex items-center justify-between gap-3 hover:bg-slate-50 dark:hover:bg-[#192738] transition-colors"
               >
                 <span>{faq.q}</span>
-                <span className="text-blue-600 font-bold">{openFaq === i ? "−" : "+"}</span>
+                <span className="text-blue-600 dark:text-cyan-400 font-bold">{openFaq === i ? "−" : "+"}</span>
               </button>
               {openFaq === i && (
-                <div className="p-4 pt-0 text-xs text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+                <div className="p-4 pt-0 text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-[#1f2d3d] bg-slate-50/50 dark:bg-[#0c131d]">
                   {faq.a}
                 </div>
               )}
